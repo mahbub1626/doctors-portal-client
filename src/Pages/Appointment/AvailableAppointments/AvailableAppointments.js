@@ -1,17 +1,45 @@
+import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import Loading from '../../Shared/Loading/Loading';
 import BookingModal from '../BookingModal/BookingModal';
 import AppointmentOption from './AppointmentOption';
 
 const AvailableAppointments = ({ selectedDate }) => {
-    const [appointmentOption, setAppointmentOption] = useState([]);
+    // const [appointmentOption, setAppointmentOption] = useState([]);
     const [treatment, setTreatment] = useState(null);
+    const date = format(selectedDate, 'PP')
 
-    useEffect(() => {
-        fetch('appointmentOptions.json')
-            .then(res => res.json())
-            .then(data => setAppointmentOption(data))
-    }, [])
+    // role 3 of React Query
+    const { data: appointmentOption = [],  refetch, isLoading } = useQuery({
+        queryKey: ['appointmentOption', date],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/v2/appointmentOptions?date=${date}`);
+            const data = await res.json();
+            return data
+        }
+    })
+
+
+    // role 2 of React Query
+    // const {data: appointmentOption = []}= useQuery({
+    //     queryKey:['appointmentOption'],
+    //     queryFn:()=> fetch('http://localhost:5000/appointmentOptions')
+    //     .then(res=>res.json())
+    // })
+
+
+    // role 1 (first time i was learn it)
+
+    // useEffect(() => {
+    //     fetch('http://localhost:5000/appointmentOptions')
+    //         .then(res => res.json())
+    //         .then(data => setAppointmentOption(data))
+    // }, [])
+
+    if(isLoading){
+        return <Loading></Loading>
+    }
 
     return (
         <section className='my-16'>
@@ -32,6 +60,7 @@ const AvailableAppointments = ({ selectedDate }) => {
                     treatment={treatment}
                     selectedDate={selectedDate}
                     setTreatment={setTreatment}
+                    refetch={ refetch}
                 ></BookingModal>
             }
         </section>
