@@ -14,7 +14,7 @@ const AvailableAppointments = ({ selectedDate }) => {
     const { data: appointmentOption = [],  refetch, isLoading } = useQuery({
         queryKey: ['appointmentOption', date],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/v2/appointmentOptions?date=${date}`);
+            const res = await fetch(`https://doctors-portal-server-chi-two.vercel.app/v2/appointmentOptions?date=${date}`);
             const data = await res.json();
             return data
         }
@@ -24,7 +24,7 @@ const AvailableAppointments = ({ selectedDate }) => {
     // role 2 of React Query
     // const {data: appointmentOption = []}= useQuery({
     //     queryKey:['appointmentOption'],
-    //     queryFn:()=> fetch('http://localhost:5000/appointmentOptions')
+    //     queryFn:()=> fetch('https://doctors-portal-server-chi-two.vercel.app/appointmentOptions')
     //     .then(res=>res.json())
     // })
 
@@ -32,7 +32,7 @@ const AvailableAppointments = ({ selectedDate }) => {
     // role 1 (first time i was learn it)
 
     // useEffect(() => {
-    //     fetch('http://localhost:5000/appointmentOptions')
+    //     fetch('https://doctors-portal-server-chi-two.vercel.app/appointmentOptions')
     //         .then(res => res.json())
     //         .then(data => setAppointmentOption(data))
     // }, [])

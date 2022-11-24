@@ -7,7 +7,7 @@ import Loading from '../Shared/Loading/Loading';
 const MyAppointment = () => {
     const { user } = useContext(AuthContext);
 
-    const url = `http://localhost:5000/bookings?email=${user?.email}`;
+    const url = `https://doctors-portal-server-chi-two.vercel.app/bookings?email=${user?.email}`;
 
     const { data: bookings = [], isLoading } = useQuery({
         queryKey: ['bookings', user?.email],
@@ -42,7 +42,7 @@ const MyAppointment = () => {
                     </thead>
                     <tbody>
                         {
-                            bookings.map((booking, i) => <tr className='mb-5' key={booking._id}>
+                            bookings?.map((booking, i) => <tr className='mb-5' key={booking._id}>
                                 <th>{i + 1}</th>
                                 <td>{booking.patientName}</td>
                                 <td>{booking.treatment}</td>
@@ -60,7 +60,7 @@ const MyAppointment = () => {
                                     }
                                     {
                                         booking.price && booking.paid && <span
-                                            className='text-primary'
+                                            className='text-green-500'
                                         >Paid</span>
                                     }
                                 </td>

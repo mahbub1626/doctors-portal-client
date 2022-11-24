@@ -24,7 +24,7 @@ const SignUp = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user)
-                toast.success('Successfully toasted!')
+                toast.success('Sign up Successfully!')
                 const userInfo = {
                     displayName: data.name
                 }
@@ -42,7 +42,7 @@ const SignUp = () => {
     const saveUser = (name, email) => {
         const user = { name, email };
         console.log(user)
-        fetch('http://localhost:5000/users', {
+        fetch('https://doctors-portal-server-chi-two.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -60,7 +60,7 @@ const SignUp = () => {
 
     //  see in hooks X
     // const getUserToken = email =>{
-    //     fetch(`http://localhost:5000/jwt?email=${email}`)
+    //     fetch(`https://doctors-portal-server-chi-two.vercel.app/jwt?email=${email}`)
     //     .then(res => res.json())
     //     .then(data => {
     //         if(data.accessToken){
